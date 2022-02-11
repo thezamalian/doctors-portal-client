@@ -6,7 +6,7 @@ import useAuth from '../../../hooks/useAuth';
 
 const Login = () => {
     const [loginData, setLoginData] = useState({});
-    const {user, isLoading, loginUser, error} = useAuth();
+    const {user, isLoading, loginUser, signInWithGoogle, error} = useAuth();
 
     const location = useLocation();
     const history = useHistory();
@@ -19,7 +19,6 @@ const Login = () => {
         newLoginData[field] = value;
 
         setLoginData(newLoginData);
-        console.log(loginData);
     }
     const handleLoginSubmit = e => {
         loginUser(loginData.email, loginData.password, location, history)
@@ -57,10 +56,13 @@ const Login = () => {
                         <Button sx={{width: '75%', m: 1}} variant="contained" type="submit">
                             Login
                         </Button>
+                        <p>---------------------------------------</p>
+                    <Button onClick={() => signInWithGoogle(location, history)} variant='contained'  sx={{width: '75%', m: 1}} color="warning"  >Google Sign In</Button>
                     </form>}
                     {isLoading && <CircularProgress sx={{mt:3}} />}
                     {user.email && <Alert sx={{mx: 7}} severity="success">You have logged in successfully!</Alert>}
                     {error && <Alert severity="error">{error}</Alert>}
+                    
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <img style={{width: '100%'}} src={login} alt="" />
